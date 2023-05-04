@@ -18,7 +18,7 @@ class KendaraanController extends Controller
     
     public function detail($id)
     {
-        $kendaraan = Kendaraan::with('motor', 'mobil')->find($id);
+        $kendaraan = Kendaraan::find($id);
         return response()->json($kendaraan);
     }
     
