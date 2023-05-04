@@ -12,7 +12,7 @@ class KendaraanController extends Controller
 {
     public function index()
     {
-        $kendaraan = Kendaraan::with('motor', 'mobil')->get();
+        $kendaraan = Kendaraan::get();
         return response()->json($kendaraan);
     }
     
