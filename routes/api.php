@@ -31,8 +31,10 @@ function ($router) {
     Route::post('/me', [AuthController::class, 'me'])->name('me');
 
     Route::get('/kendaraan', [KendaraanController::class, 'index'])->name('index')->middleware('jwt.auth');;
-    Route::get('/kendaraan/{id}', [KendaraanController::class, 'show'])->name('show')->middleware('jwt.auth');;
+    Route::get('/kendaraan/{id}', [KendaraanController::class, 'detail'])->name('detail')->middleware('jwt.auth');;
     Route::post('/kendaraan', [KendaraanController::class, 'store'])->name('store')->middleware('jwt.auth');;
     Route::put('/kendaraan{id}', [KendaraanController::class, 'update'])->name('update')->middleware('jwt.auth');;
-    Route::delete('/kendaraan/{id}', [KendaraanController::class, 'delete'])->name('delete')->middleware('jwt.auth');;
+    Route::delete('/kendaraan/{id}', [KendaraanController::class, 'destroy'])->name('destroy')->middleware('jwt.auth');;
+
+    Route::get('/stock', [KendaraanController::class, 'stock'])->name('stock')->middleware('jwt.auth');;
 });
