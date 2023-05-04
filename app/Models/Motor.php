@@ -17,7 +17,7 @@ class Motor extends Model
 
     public function kendaraan()
     {
-        return $this->morphOne(Kendaraan::class, 'kendaraanable');
+        return $this->morphOne(Kendaraan::class, 'jeniskendaraan');
     }
 
 }

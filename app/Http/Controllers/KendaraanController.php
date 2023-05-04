@@ -116,17 +116,17 @@ class KendaraanController extends Controller
         if (!$kendaraan) {
             return response()->json(['message' => 'Kendaraan tidak ada.'], 404);
         }
-
+        
         $mobil = Mobil::where('id_kendaraan', $id)->first();
         if ($mobil) {
             $mobil->delete();
         }
-
+        
         $motor = Motor::where('id_kendaraan', $id)->first();
         if ($motor) {
             $motor->delete();
         }
-
+        
         $kendaraan->delete();
         return response()->json(['message' => 'Kendaraan dihapus.'], 200);
     }

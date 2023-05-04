@@ -14,8 +14,6 @@ class CreateKendaraanCollection extends Migration
     public function up()
     {
         Schema::connection('mongodb')->create('kendaraan', function ($collection) {
-            $collection->index('motor_id');
-            $collection->index('mobil_id');
             $collection->timestamps();
             $collection->id();
             $collection->string('nama');
@@ -23,6 +21,7 @@ class CreateKendaraanCollection extends Migration
             $collection->string('warna');
             $collection->integer('harga');
             $collection->integer('stok');
+            $collection->integer('terjual')->default(0);
             $collection->string('jeniskendaraan_type')->nullable();
             $collection->string('jeniskendaraan_id')->nullable();
         });

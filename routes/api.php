@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PenjualanKendaraanController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -37,4 +38,6 @@ function ($router) {
     Route::delete('/kendaraan/{id}', [KendaraanController::class, 'destroy'])->name('destroy')->middleware('jwt.auth');;
 
     Route::get('/stock', [KendaraanController::class, 'stock'])->name('stock')->middleware('jwt.auth');;
+
+    Route::put('/kendaraan/{id}/jual', [PenjualanKendaraanController::class, 'jualKendaraan'])->name('jualKendaraan')->middleware('jwt.auth');
 });
