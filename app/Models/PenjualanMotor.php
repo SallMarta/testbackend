@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 //use Illuminate\Database\Eloquent\Model;
 use Jenssegers\Mongodb\Eloquent\Model;
 
-class PenjualanKendaraan extends Model
+class PenjualanMotor extends Model
 {
     protected $connection = 'mongodb';
     
-    protected $collection = 'penjualan_kendaraan';
+    protected $collection = 'penjualan_motor';
 
     protected $fillable = [
         'id_kendaraan', 
@@ -18,5 +18,4 @@ class PenjualanKendaraan extends Model
         'harga_jual',
         'jenis_kendaraan',
     ];
-
 }

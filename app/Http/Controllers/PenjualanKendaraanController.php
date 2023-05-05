@@ -6,65 +6,12 @@ use App\Models\Kendaraan;
 use App\Models\Mobil;
 use App\Models\Motor;
 use App\Models\PenjualanKendaraan;
+use App\Models\PenjualanMobil;
+use App\Models\PenjualanMotor;
 use Illuminate\Http\Request;
 
 class PenjualanKendaraanController extends Controller
 {
-    /**
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
-    public function index()
-    {
-        //
-    }
-    
-    /**
-    * Store a newly created resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
-    */
-    public function store(Request $request)
-    {
-        //
-    }
-    
-    /**
-    * Display the specified resource.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
-    public function show($id)
-    {
-        //
-    }
-    
-    /**
-    * Update the specified resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-    
-    /**
-    * Remove the specified resource from storage.
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
-    public function destroy($id)
-    {
-        //
-    }
-    
     public function jualKendaraan($id)
     {
         $kendaraan = Kendaraan::find($id);
@@ -80,19 +27,68 @@ class PenjualanKendaraanController extends Controller
         $kendaraan->stok -= 1;
         $kendaraan->save();
         
-        $mobil = Mobil::where('id_kendaraan', $id)->first();
-        if ($mobil) {
-            $mobil->stok -= 1;
-            $mobil->save();
-        }
-        
         $motor = Motor::where('id_kendaraan', $id)->first();
         if ($motor) {
             $motor->stok -= 1;
             $motor->save();
+            
+            $laporan = new PenjualanMotor();
+            $laporan->kendaraan_id = $motor->id;
+            $laporan->harga = $motor->harga;
+            $laporan->tanggal_jual = date('d-m-Y H:i:s');
+            $laporan->save();
         }
         
-        return response()->json(['message' => 'Kendaraan terjual.']);
+        $mobil = Mobil::where('id_kendaraan', $id)->first();
+        if ($mobil) {
+            $mobil->stok -= 1;
+            $mobil->save();
+            
+            $laporan = new PenjualanMobil();
+            $laporan->kendaraan_id = $mobil->id;
+            $laporan->harga = $mobil->harga;
+            $laporan->tanggal_jual = date('d-m-Y H:i:s');
+            $laporan->save();
+        }
+        
+        $laporan = new PenjualanKendaraan();
+        $laporan->kendaraan_id = $motor->id;
+        $laporan->harga = $motor->harga;
+        $laporan->nama = $kendaraan->nama;
+        $laporan->tanggal_jual = date('d-m-Y H:i:s');
+        $laporan->save();
+        
+        return response()->json([
+            'message' => 'Kendaraan terjual.', 
+            'data' => $laporan]
+        );
+    }
+    
+    public function laporanKendaraan()
+    {
+        $laporanKendaraan = PenjualanKendaraan::all();
+        
+        return response()->json([
+            'laporan_kendaraan' => $laporanKendaraan
+        ]);
+    }
+
+    public function laporanMotor()
+    {
+        $laporanMotor = PenjualanMotor::all();
+        
+        return response()->json([
+            'laporan_motor' => $laporanMotor
+        ]);
+    }
+
+    public function laporanMobil()
+    {
+        $laporanMobil = PenjualanMobil::all();
+        
+        return response()->json([
+            'laporan_mobil' => $laporanMobil
+        ]);
     }
     
 }

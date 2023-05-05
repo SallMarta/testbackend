@@ -12,14 +12,14 @@ class Kendaraan extends Model
     protected $connection = 'mongodb';
     
     protected $collection = 'kendaraan';
-
-    protected $fillable = ['nama', 'tahun', 'warna', 'harga', 'stok', 'motor_id', 'mobil_id'];
-
+    
+    protected $fillable = ['nama', 'tahun', 'warna', 'harga', 'stok', 'motor_id', 'mobil_id', 'jenis_kendaraan'];
+    
     public function motor()
     {
         return $this->hasMany(Motor::class);
     }
-
+    
     public function mobil()
     {
         return $this->hasMany(Mobil::class);

@@ -22,6 +22,7 @@ class CreateKendaraanCollection extends Migration
             $collection->integer('harga');
             $collection->integer('stok');
             $collection->integer('terjual')->default(0);
+            $collection->string('jenis_kendaraan');
             $collection->string('jeniskendaraan_type')->nullable();
             $collection->string('jeniskendaraan_id')->nullable();
         });

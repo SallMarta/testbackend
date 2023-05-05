@@ -4,16 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePenjualanKendaraansTable extends Migration
+class CreatePenjualanMotorsTable extends Migration
 {
     /**
-    * Run the migrations.
-    *
-    * @return void
-    */
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
-        Schema::connection('mongodb')->create('penjualan_kendaraans', function ($collection) {
+        Schema::connection('mongodb')->create('penjualan_motors', function ($collection) {
             $collection->id();
             $collection->dateTime('tanggal_penjualan');
             $collection->unsignedBigInteger('id_kendaraan');
@@ -22,14 +22,14 @@ class CreatePenjualanKendaraansTable extends Migration
             $collection->timestamps();
         });
     }
-    
+
     /**
-    * Reverse the migrations.
-    *
-    * @return void
-    */
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
-        Schema::connection('mongodb')->drop('penjualan_kendaraans');
+        Schema::connection('mongodb')->drop('penjualan_motors');
     }
 }

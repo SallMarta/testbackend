@@ -13,12 +13,18 @@ class KendaraanController extends Controller
     public function index()
     {
         $kendaraan = Kendaraan::get();
+        if (!$kendaraan) {
+            return response()->json(['message' => 'Kendaraan tidak ada.'], 404);
+        }
         return response()->json($kendaraan);
     }
     
     public function detail($id)
     {
         $kendaraan = Kendaraan::find($id);
+        if (!$kendaraan) {
+            return response()->json(['message' => 'Kendaraan tidak ada.'], 404);
+        }
         return response()->json($kendaraan);
     }
     
@@ -33,6 +39,7 @@ class KendaraanController extends Controller
         $kendaraan->save();
         
         if ($request->filled('mesin_motor') && $request->filled('suspensi_motor') && $request->filled('transmisi_motor')) {
+            $kendaraan->jenis_kendaraan = 'motor';
             $motor = new Motor;
             $motor->mesin_motor = $request->input('mesin_motor');
             $motor->suspensi_motor = $request->input('suspensi_motor');
@@ -43,11 +50,13 @@ class KendaraanController extends Controller
             $motor->warna = $kendaraan->warna;
             $motor->harga = $kendaraan->harga;
             $motor->stok = $kendaraan->stok;
+            $motor->jenis_kendaraan = $kendaraan->jenis_kendaraan;
             $motor->save();
             $kendaraan->jeniskendaraan()->save($motor);
         }
         
         if ($request->filled('mesin_mobil') && $request->filled('kapasitas_mobil') && $request->filled('tipe_mobil')) {
+            $kendaraan->jenis_kendaraan = 'mobil';
             $mobil = new Mobil;
             $mobil->mesin_mobil = $request->input('mesin_mobil');
             $mobil->kapasitas_mobil = $request->input('kapasitas_mobil');
@@ -58,6 +67,7 @@ class KendaraanController extends Controller
             $mobil->warna = $kendaraan->warna;
             $mobil->harga = $kendaraan->harga;
             $mobil->stok = $kendaraan->stok;
+            $mobil->jenis_kendaraan = $kendaraan->jenis_kendaraan;
             $mobil->save();
             $kendaraan->jeniskendaraan()->save($mobil);
         }

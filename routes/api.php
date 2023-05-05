@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\PenjualanKendaraanController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KendaraanController;
+use App\Http\Controllers\PenjualanKendaraanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,4 +44,9 @@ function ($router) {
 
     //menjual kendaraan
     Route::put('/kendaraan/{id}/jual', [PenjualanKendaraanController::class, 'jualKendaraan'])->name('jualKendaraan')->middleware('jwt.auth');
+
+    //laporan
+    Route::get('/laporan', [PenjualanKendaraanController::class, 'laporanKendaraan'])->name('laporan')->middleware('jwt.auth');
+    Route::get('/laporan/motor', [PenjualanKendaraanController::class, 'laporanMotor'])->name('laporanMotor')->middleware('jwt.auth');
+    Route::get('/laporan/mobil', [PenjualanKendaraanController::class, 'laporanMobil'])->name('laporanMobil')->middleware('jwt.auth');
 });
